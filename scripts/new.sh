@@ -4,7 +4,7 @@ source "$PWD/.env" || { echo "No .env file found in the current directory!"; exi
 
 [ -z "$SESSION_TOKEN" ] && { echo "SESSION_TOKEN is not set in .env file!"; exit 1; }
 
-current_day=$(find . -maxdepth 1 -type d -name "day-*" | head -1)
+current_day=$(find . -maxdepth 1 -type d -name "day-*" | head -1 | cut -c 3-)
 current_day=${current_day/*-}
 next_day="$(( current_day + 1 ))"
 next_day_padded=$(printf "%02d" $next_day)

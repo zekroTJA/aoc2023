@@ -1,4 +1,4 @@
-current_day=$(find . -maxdepth 1 -type d -name "day-*" | head -1)
+current_day=$(find . -maxdepth 1 -type d -name "day-*" | head -1 | cut -c 3-)
 
 # ---- CHECKS ----
 
