@@ -1,0 +1,53 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: run
+
+  new:
+    desc: "Create a new day project."
+    cmds:
+      - bash scripts/new.sh
+
+  commit:
+    desc: "Commit the latest day solution."
+    cmds:
+      - bash scripts/commit.sh
+
+  test:
+    desc: "Run all unit tests."
+    cmds:
+      - cargo test
+
+  run:
+    aliases:
+      - "r"
+    desc: "Run solution with user input."
+    cmds:
+      - bash scripts/run.sh {{.CLI_ARGS}}
+  
+  runtest:
+    aliases:
+      - "rt"
+    desc: "Run solution with test input."
+    cmds:
+      - bash scripts/run.sh {{.CLI_ARGS}} --test
+
+  releaserun:
+    aliases:
+      - "rr"
+    env:
+      RELEASE: "true"
+    cmds:
+      - bash scripts/run.sh {{.CLI_ARGS}}
+    
+  releaseruntest:
+    aliases:
+      - "rrt"
+    env:
+      RELEASE: "true"
+    cmds:
+      - bash scripts/run.sh {{.CLI_ARGS}} --test
