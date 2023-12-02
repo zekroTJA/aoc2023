@@ -23,7 +23,8 @@ cargo add -p "day-$next_day_padded" lib --path="lib"
 
 cat > "day-$next_day_padded/src/main.rs" << EOF
 fn main() {
-    let input: String = lib::read_input!();
+    // let input: String = lib::read_input!();
+    let input: String = lib::read_test_input!();
 }
 
 #[cfg(test)]
@@ -32,7 +33,7 @@ mod test {
 }
 EOF
 
-curl -L -H "Cookie: session=$SESSION_TOKEN" -o "day-$next_day_padded/input.txt" "https://adventofcode.com/${YEAR}/day/${next_day}/input"
+curl -LsH "Cookie: session=$SESSION_TOKEN" -o "day-$next_day_padded/input.txt" "https://adventofcode.com/${YEAR}/day/${next_day}/input"
 
 touch "day-$next_day_padded/challenge.txt"
 touch "day-$next_day_padded/test_input.txt"
