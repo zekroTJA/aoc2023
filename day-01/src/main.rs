@@ -55,8 +55,3 @@ fn main() {
 
     println!("Day2 Solution: {d2}");
 }
-
-#[cfg(test)]
-mod test {
-    use super::*;
-}
