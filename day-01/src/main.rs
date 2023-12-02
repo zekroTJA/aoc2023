@@ -45,13 +45,13 @@ fn get_combined_number(line: &str, with_literals: bool) -> u32 {
 fn main() {
     let input: String = lib::read_input!();
 
-    let lines: Vec<&str> = input.split('\n').filter(|l| !l.is_empty()).collect();
+    let lines: Vec<&str> = input.split('\n').collect();
 
     let d1: u32 = lines.iter().map(|l| get_combined_number(l, false)).sum();
 
-    println!("Day1 Solution: {d1}");
+    println!("Day 1 Solution: {d1}");
 
     let d2: u32 = lines.iter().map(|l| get_combined_number(l, true)).sum();
 
-    println!("Day2 Solution: {d2}");
+    println!("Day 2 Solution: {d2}");
 }

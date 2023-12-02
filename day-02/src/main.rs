@@ -51,12 +51,12 @@ impl Game {
             blue: self.rounds.iter().map(|r| r.blue).max().unwrap(),
         }
     }
-}
 
-fn is_possible(game: &Game, max: &Cubes) -> bool {
-    game.rounds
-        .iter()
-        .all(|r| r.blue <= max.blue && r.red <= max.red && r.green <= max.green)
+    fn is_possible(&self, max: &Cubes) -> bool {
+        self.rounds
+            .iter()
+            .all(|r| r.blue <= max.blue && r.red <= max.red && r.green <= max.green)
+    }
 }
 
 fn main() {
@@ -71,11 +71,13 @@ fn main() {
     };
     let d1: u32 = games
         .iter()
-        .filter(|g| is_possible(g, &max))
+        .filter(|g| g.is_possible(&max))
         .map(|g| g.id)
         .sum();
+
     println!("Day 1 Solution: {d1}");
 
     let d2: u32 = games.iter().map(Game::max_cubes).map(|c| c.power()).sum();
+
     println!("Day 2 Solution: {d2}");
 }
