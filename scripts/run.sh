@@ -7,7 +7,7 @@ function run_day {
 }
 
 if [ -z "$1" ] || [ "$1" == "--test" ]; then
-    current_day=$(find . -maxdepth 1 -type d -name "day-*" | head -1 | cut -c 3-)
+    current_day=$(find . -maxdepth 1 -type d -name "day-*" | tail -1 | cut -c 3-)
     run_day "$current_day" "$1"
 else
     # cargo run -p $(printf "day-%02d" $1)
