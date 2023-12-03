@@ -1,4 +1,5 @@
 use crate::vector::Vector;
+use core::fmt;
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 #[derive(Clone, Copy, Hash, Eq, PartialEq, Debug)]
@@ -59,5 +60,11 @@ where
 {
     fn from((x, y): (T, T)) -> Self {
         Self(x.into(), y.into())
+    }
+}
+
+impl fmt::Display for Pos {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({}, {})", self.0, self.1)
     }
 }
