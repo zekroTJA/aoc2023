@@ -47,11 +47,11 @@ fn main() {
 
     let lines: Vec<&str> = input.split('\n').collect();
 
-    let d1: u32 = lines.iter().map(|l| get_combined_number(l, false)).sum();
+    let p1: u32 = lines.iter().map(|l| get_combined_number(l, false)).sum();
 
-    println!("Day 1 Solution: {d1}");
+    println!("Part 1 Solution: {p1}");
 
-    let d2: u32 = lines.iter().map(|l| get_combined_number(l, true)).sum();
+    let p2: u32 = lines.iter().map(|l| get_combined_number(l, true)).sum();
 
-    println!("Day 2 Solution: {d2}");
+    println!("Part 2 Solution: {p2}");
 }

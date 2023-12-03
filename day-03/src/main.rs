@@ -105,8 +105,8 @@ fn main() {
         .filter(|n| is_serial_number(&grid, n).is_some())
         .collect();
 
-    let d1: u32 = res.iter().map(|r| r.number).sum();
-    println!("Part 1 Solution: {d1}");
+    let p1: u32 = res.iter().map(|r| r.number).sum();
+    println!("Part 1 Solution: {p1}");
 
     let gears: Vec<_> = numbers
         .iter()
@@ -120,10 +120,10 @@ fn main() {
         v.push(number);
     }
 
-    let d2: u32 = map
+    let p2: u32 = map
         .values()
         .filter(|v| v.len() == 2)
         .map(|v| v.iter().map(|n| n.number).product::<u32>())
         .sum();
-    println!("Part 2 Solution: {d2}");
+    println!("Part 2 Solution: {p2}");
 }

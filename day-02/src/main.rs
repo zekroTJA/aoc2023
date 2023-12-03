@@ -69,15 +69,15 @@ fn main() {
         green: 13,
         blue: 14,
     };
-    let d1: u32 = games
+    let p1: u32 = games
         .iter()
         .filter(|g| g.is_possible(&max))
         .map(|g| g.id)
         .sum();
 
-    println!("Day 1 Solution: {d1}");
+    println!("Part 1 Solution: {p1}");
 
-    let d2: u32 = games.iter().map(Game::max_cubes).map(|c| c.power()).sum();
+    let p2: u32 = games.iter().map(Game::max_cubes).map(|c| c.power()).sum();
 
-    println!("Day 2 Solution: {d2}");
+    println!("Part 2 Solution: {p2}");
 }
