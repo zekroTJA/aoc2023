@@ -2,25 +2,28 @@ use crate::vector::Vector;
 use core::fmt;
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
-#[derive(Clone, Copy, Hash, Eq, PartialEq, Debug)]
-pub struct Pos(pub isize, pub isize);
+#[derive(Clone, Copy, Hash, Eq, PartialEq, Default, Debug)]
+pub struct Pos {
+    pub x: isize,
+    pub y: isize,
+}
 
 impl Vector for Pos {
     type Output = Pos;
 
     fn len(&self) -> f64 {
-        ((self.0.pow(2) + self.1.pow(2)) as f64).sqrt().abs()
+        ((self.x.pow(2) + self.y.pow(2)) as f64).sqrt().abs()
     }
 
     fn flatten(&self) -> Self::Output {
-        let (mut x, mut y) = (self.0, self.1);
+        let (mut x, mut y) = (self.x, self.y);
         if x != 0 {
             x /= x.abs();
         }
         if y != 0 {
             y /= y.abs();
         }
-        Pos(x, y)
+        (x, y).into()
     }
 }
 
@@ -28,7 +31,7 @@ impl Add for Pos {
     type Output = Pos;
 
     fn add(self, rhs: Self) -> Self::Output {
-        Pos(self.0 + rhs.0, self.1 + rhs.1)
+        (self.x + rhs.x, self.y + rhs.y).into()
     }
 }
 
@@ -36,21 +39,21 @@ impl Sub for Pos {
     type Output = Pos;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        Pos(self.0 - rhs.0, self.1 - rhs.1)
+        (self.x - rhs.x, self.y - rhs.y).into()
     }
 }
 
 impl AddAssign for Pos {
     fn add_assign(&mut self, rhs: Self) {
-        self.0 += rhs.0;
-        self.1 += rhs.1;
+        self.x += rhs.x;
+        self.y += rhs.y;
     }
 }
 
 impl SubAssign for Pos {
     fn sub_assign(&mut self, rhs: Self) {
-        self.0 -= rhs.0;
-        self.1 -= rhs.1;
+        self.x -= rhs.x;
+        self.y -= rhs.y;
     }
 }
 
@@ -59,12 +62,15 @@ where
     T: Into<isize>,
 {
     fn from((x, y): (T, T)) -> Self {
-        Self(x.into(), y.into())
+        Self {
+            x: x.into(),
+            y: y.into(),
+        }
     }
 }
 
 impl fmt::Display for Pos {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}, {})", self.0, self.1)
+        write!(f, "(x: {}, y: {})", self.x, self.y)
     }
 }

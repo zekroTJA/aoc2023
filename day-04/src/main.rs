@@ -1,12 +1,10 @@
-#[derive(Clone, Debug)]
 struct Card {
     win: Vec<usize>,
     hand: Vec<usize>,
 }
 
 fn parse_numbers(raw: &str) -> Vec<usize> {
-    raw.split(' ')
-        .filter(|v| !str::is_empty(v))
+    raw.split_ascii_whitespace()
         .map(|v| v.parse().unwrap())
         .collect()
 }

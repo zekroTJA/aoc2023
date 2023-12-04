@@ -21,47 +21,47 @@ impl fmt::Display for Number {
 }
 
 fn is_serial_number(grid: &[Vec<char>], number: &Number) -> Option<(char, Pos)> {
-    for x in number.start_point.0 - 1..=number.end_point.0 + 1 {
-        let y = number.start_point.1 - 1;
+    for x in number.start_point.x - 1..=number.end_point.x + 1 {
+        let y = number.start_point.y - 1;
         if y < 0 || y >= grid.len() as isize || x < 0 || x >= grid[0].len() as isize {
             continue;
         }
         let c = grid[y as usize][x as usize];
         if !c.is_ascii_digit() && c != '.' {
-            return Some((c, Pos(x, y)));
+            return Some((c, (x, y).into()));
         }
     }
 
-    for x in number.start_point.0 - 1..=number.end_point.0 + 1 {
-        let y = number.start_point.1 + 1;
+    for x in number.start_point.x - 1..=number.end_point.x + 1 {
+        let y = number.start_point.y + 1;
         if y < 0 || y >= grid.len() as isize || x < 0 || x >= grid[0].len() as isize {
             continue;
         }
         let c = grid[y as usize][x as usize];
         if !c.is_ascii_digit() && c != '.' {
-            return Some((c, Pos(x, y)));
+            return Some((c, (x, y).into()));
         }
     }
 
-    for y in number.start_point.1 - 1..=number.start_point.1 + 1 {
-        let x = number.start_point.0 - 1;
+    for y in number.start_point.y - 1..=number.start_point.y + 1 {
+        let x = number.start_point.x - 1;
         if y < 0 || y >= grid.len() as isize || x < 0 || x >= grid[0].len() as isize {
             continue;
         }
         let c = grid[y as usize][x as usize];
         if !c.is_ascii_digit() && c != '.' {
-            return Some((c, Pos(x, y)));
+            return Some((c, (x, y).into()));
         }
     }
 
-    for y in number.end_point.1 - 1..=number.end_point.1 + 1 {
-        let x = number.end_point.0 + 1;
+    for y in number.end_point.y - 1..=number.end_point.y + 1 {
+        let x = number.end_point.x + 1;
         if y < 0 || y >= grid.len() as isize || x < 0 || x >= grid[0].len() as isize {
             continue;
         }
         let c = grid[y as usize][x as usize];
         if !c.is_ascii_digit() && c != '.' {
-            return Some((c, Pos(x, y)));
+            return Some((c, (x, y).into()));
         }
     }
 
@@ -79,13 +79,13 @@ fn main() {
     let mut numbers = vec![];
     let mut buff = String::new();
     let mut start_pos = None;
-    let mut last_pos = Pos(0, 0);
+    let mut last_pos = Pos::default();
     for (y, line) in grid.iter().enumerate() {
         for (x, &char) in line.iter().enumerate() {
             if char.is_ascii_digit() {
                 buff.push(char);
                 if start_pos.is_none() {
-                    start_pos = Some(Pos(x as isize, y as isize))
+                    start_pos = Some((x as isize, y as isize).into())
                 }
             } else if start_pos.is_some() {
                 numbers.push(Number {
@@ -96,7 +96,7 @@ fn main() {
                 buff.clear();
                 start_pos = None;
             }
-            last_pos = Pos(x as isize, y as isize);
+            last_pos = (x as isize, y as isize).into();
         }
     }
 
