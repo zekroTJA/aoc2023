@@ -102,18 +102,13 @@ fn main() {
 
     // ----------------------------------------------------------------------
 
-    let numbers: Vec<isize> = parts[0][7..]
-        .split_ascii_whitespace()
-        .map(|v| v.parse().unwrap())
-        .collect();
-
-    let seeds: Vec<_> = numbers.chunks(2).map(|c| c[0]..c[0] + c[1]).collect();
+    let seeds: Vec<_> = seeds.chunks(2).map(|c| c[0]..c[0] + c[1]).collect();
 
     let p2: isize = maps
         .iter()
         .fold(seeds, |s, m| m.map_ranges(&s))
         .iter()
-        .map(|v| v.clone().min().unwrap())
+        .map(|v| v.clone().start)
         .min()
         .unwrap();
 
