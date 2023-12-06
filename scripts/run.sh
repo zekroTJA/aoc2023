@@ -1,8 +1,12 @@
-[ "$RELEASE" == "true" ] && RELEASE="--release" || RELEASE=""
-
 function run_day {
-    [ "$RELEASE" == "true" ] && TARGET=release || TARGET=debug
-    cargo build $RELEASE -p "$1"
+    if [ "$RELEASE" == "true" ]; then 
+        TARGET=release
+        RELEASE_FLAG="--release"
+    else 
+        TARGET=debug
+    fi
+    
+    cargo build $RELEASE_FLAG -p "$1"
     "./target/$TARGET/$1" "$2"
 }
 
