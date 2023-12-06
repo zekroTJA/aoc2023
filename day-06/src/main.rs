@@ -1,7 +1,7 @@
 fn main() {
     let input: String = lib::read_input!();
 
-    let values: Vec<Vec<usize>> = input
+    let values: Vec<Vec<isize>> = input
         .split('\n')
         .map(|line| {
             line.split_ascii_whitespace()
@@ -13,7 +13,7 @@ fn main() {
 
     let time_distances: Vec<_> = values[0].iter().zip(values[1].iter()).collect();
 
-    let p1: usize = time_distances
+    let p1: isize = time_distances
         .iter()
         .map(|(&t, &d)| possibilities(t, d))
         .product();
@@ -25,17 +25,19 @@ fn main() {
         .split('\n')
         .map(|line| line[9..].replace(' ', "").parse().unwrap());
 
-    let time: usize = time_distances.next().unwrap();
-    let distance: usize = time_distances.next().unwrap();
+    let time: isize = time_distances.next().unwrap();
+    let distance: isize = time_distances.next().unwrap();
 
-    let p2 = possibilities(time, distance);
+    let p2 = possibilities_faster(time as f64, distance as f64);
     println!("Part 2 Solution: {p2}");
 }
 
-fn possibilities(time: usize, distance: usize) -> usize {
+// This was my original approach, but i wanted to explore how to solve this
+// by using a quadratic equation.
+fn possibilities(time: isize, distance: isize) -> isize {
     (1..time)
         .filter(|charge| charge * (time - charge) > distance)
-        .count()
+        .count() as isize
 
     // // This is the imperative version of the code above which
     // // - for some reason - runs signifficantly faster (~3x) than
@@ -50,4 +52,11 @@ fn possibilities(time: usize, distance: usize) -> usize {
     //     }
     // }
     // poss
+}
+
+fn possibilities_faster(t: f64, d: f64) -> isize {
+    let h1 = 0.5 * (t - (t.powi(2) - 4.0 * d).sqrt());
+    let h2 = 0.5 * (t + (t.powi(2) - 4.0 * d).sqrt());
+
+    (h2.floor() - h1.floor()).abs() as isize
 }
