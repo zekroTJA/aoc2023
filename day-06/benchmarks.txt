@@ -1,0 +1,24 @@
+ITER VERSION
+============
+
+❯ hyperfine -N -w 3 ./target/debug/day-06 ./target/release/day-06
+Benchmark 1: ./target/debug/day-06
+  Time (mean ± σ):     901.8 ms ±  25.7 ms    [User: 896.7 ms, System: 1.1 ms]
+  Range (min … max):   866.8 ms … 932.0 ms    10 runs
+ 
+Benchmark 2: ./target/release/day-06
+  Time (mean ± σ):      27.3 ms ±   0.7 ms    [User: 26.4 ms, System: 0.7 ms]
+  Range (min … max):    26.5 ms …  31.0 ms    111 runs
+
+
+IMPERATIVE VERSION
+==================
+
+❯ hyperfine -N -w 3 ./target/debug/day-06 ./target/release/day-06
+Benchmark 1: ./target/debug/day-06
+  Time (mean ± σ):     320.0 ms ±  13.3 ms    [User: 317.7 ms, System: 0.8 ms]
+  Range (min … max):   305.4 ms … 344.6 ms    10 runs
+ 
+Benchmark 2: ./target/release/day-06
+  Time (mean ± σ):      27.9 ms ±   0.9 ms    [User: 26.9 ms, System: 0.7 ms]
+  Range (min … max):    26.5 ms …  31.0 ms    112 runs
