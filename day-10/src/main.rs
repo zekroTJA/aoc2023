@@ -46,14 +46,14 @@ impl Tile {
         }
     }
 
-    fn receive_dirs(&self) -> Vec<Direction> {
+    fn go_dirs(&self) -> Vec<Direction> {
         match self {
             Tile::H => vec![Direction::Left, Direction::Right],
             Tile::V => vec![Direction::Up, Direction::Down],
-            Tile::NE => vec![Direction::Down, Direction::Left],
-            Tile::NW => vec![Direction::Down, Direction::Right],
-            Tile::SW => vec![Direction::Up, Direction::Right],
-            Tile::SE => vec![Direction::Up, Direction::Left],
+            Tile::NE => vec![Direction::Up, Direction::Right],
+            Tile::NW => vec![Direction::Up, Direction::Left],
+            Tile::SW => vec![Direction::Down, Direction::Left],
+            Tile::SE => vec![Direction::Down, Direction::Right],
             Tile::Ground => vec![],
             Tile::Start => vec![
                 Direction::Up,
@@ -64,8 +64,8 @@ impl Tile {
         }
     }
 
-    fn go_dirs(&self) -> Vec<Direction> {
-        self.receive_dirs().iter().map(|d| d.reverse()).collect()
+    fn receive_dirs(&self) -> Vec<Direction> {
+        self.go_dirs().iter().map(|d| d.reverse()).collect()
     }
 }
 
@@ -145,17 +145,13 @@ impl Grid {
         self.0[pos.y as usize][pos.x as usize]
     }
 
-    fn can_go(&self, curr_pos: Pos, dir: Direction) -> bool {
-        let to_pos = curr_pos + dir.into();
-        if to_pos.is_negative()
-            || to_pos.y >= self.0.len() as isize
-            || to_pos.x >= self.0[0].len() as isize
-        {
-            return false;
-        }
+    fn in_bounds(&self, pos: Pos) -> bool {
+        !pos.is_negative() && pos.y < self.0.len() as isize && pos.x < self.0[0].len() as isize
+    }
 
-        let curr = self.at(curr_pos);
-        if !curr.go_dirs().contains(&dir) {
+    fn could_connect(&self, curr_pos: Pos, dir: Direction) -> bool {
+        let to_pos = curr_pos + dir.into();
+        if !self.in_bounds(to_pos) {
             return false;
         }
 
@@ -163,17 +159,26 @@ impl Grid {
         dest.receive_dirs().contains(&dir)
     }
 
-    fn could_connect(&self, curr_pos: Pos, dir: Direction) -> bool {
-        let to_pos = curr_pos + dir.into();
-        if to_pos.is_negative()
-            || to_pos.y >= self.0.len() as isize
-            || to_pos.x >= self.0[0].len() as isize
-        {
+    fn can_go(&self, curr_pos: Pos, dir: Direction) -> bool {
+        if !self.could_connect(curr_pos, dir) {
             return false;
         }
 
-        let dest = self.at(to_pos);
-        dest.receive_dirs().contains(&dir)
+        let curr = self.at(curr_pos);
+        curr.go_dirs().contains(&dir)
+    }
+
+    fn neightbor_positions(&self, pos: Pos) -> Vec<Pos> {
+        [
+            Direction::Up,
+            Direction::Down,
+            Direction::Left,
+            Direction::Right,
+        ]
+        .iter()
+        .map(|&d| pos + d.into())
+        .filter(|&p| self.in_bounds(p))
+        .collect()
     }
 
     fn neighbors(&self, pos: Pos) -> Vec<Pos> {
@@ -207,23 +212,6 @@ impl Grid {
         }
 
         panic!("no result found!");
-    }
-
-    fn neightbor_positions(&self, pos: Pos) -> Vec<Pos> {
-        [
-            Direction::Up,
-            Direction::Down,
-            Direction::Left,
-            Direction::Right,
-        ]
-        .iter()
-        .map(|&d| pos + d.into())
-        .filter(|p| {
-            (p.is_null() || !p.is_negative())
-                && p.y < self.0.len() as isize
-                && p.x < self.0[0].len() as isize
-        })
-        .collect()
     }
 
     fn part2(&self) -> usize {
@@ -288,8 +276,7 @@ impl Grid {
 }
 
 fn main() {
-    // let input: String = lib::read_input!();
-    let input: String = lib::read_test_input!();
+    let input: String = lib::read_input!();
 
     let grid = Grid::parse(&input);
 
@@ -299,6 +286,7 @@ fn main() {
     // ---------------------------------------------
 
     let grid = grid.replace_non_connected(&inloop).intersperse();
+
     let p2 = grid.part2();
     println!("Part 2 Solution: {p2}");
 }
