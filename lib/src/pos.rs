@@ -8,6 +8,16 @@ pub struct Pos {
     pub y: isize,
 }
 
+impl Pos {
+    pub fn is_negative(&self) -> bool {
+        self.x.is_negative() || self.y.is_negative()
+    }
+
+    pub fn is_null(&self) -> bool {
+        self.x == 0 && self.y == 0
+    }
+}
+
 impl Vector for Pos {
     type Output = Pos;
 

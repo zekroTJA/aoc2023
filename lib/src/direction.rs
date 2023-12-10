@@ -1,11 +1,22 @@
 use crate::pos::Pos;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Direction {
     Up,
     Down,
     Left,
     Right,
+}
+
+impl Direction {
+    pub fn reverse(&self) -> Direction {
+        match self {
+            Direction::Up => Direction::Down,
+            Direction::Down => Direction::Up,
+            Direction::Left => Direction::Right,
+            Direction::Right => Direction::Left,
+        }
+    }
 }
 
 impl From<&str> for Direction {
