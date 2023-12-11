@@ -22,6 +22,8 @@ cargo new --bin --vcs=none "day-$next_day_padded"
 cargo add -p "day-$next_day_padded" lib --path="lib"
 
 cat > "day-$next_day_padded/src/main.rs" << EOF
+use lib::*;
+
 fn main() {
     // let input: String = lib::read_input!();
     let input: String = lib::read_test_input!();
