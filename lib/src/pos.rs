@@ -16,6 +16,10 @@ impl Pos {
     pub fn is_null(&self) -> bool {
         self.x == 0 && self.y == 0
     }
+
+    pub fn manhattan_distance(&self, to: Pos) -> usize {
+        (to.y - self.y).unsigned_abs() + (to.x - self.x).unsigned_abs()
+    }
 }
 
 impl Vector for Pos {

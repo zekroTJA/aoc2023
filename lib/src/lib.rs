@@ -36,3 +36,17 @@ macro_rules! read_test_input {
         input.trim_end().to_owned()
     }};
 }
+
+#[macro_export]
+macro_rules! p1 {
+    ($p: expr) => {
+        println!("Part 1 Solution: {}", $p);
+    };
+}
+
+#[macro_export]
+macro_rules! p2 {
+    ($p: expr) => {
+        println!("Part 2 Solution: {}", $p);
+    };
+}
