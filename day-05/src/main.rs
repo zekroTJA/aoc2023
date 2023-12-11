@@ -1,3 +1,4 @@
+use lib::*;
 use std::ops::Range;
 
 struct Map {
@@ -98,7 +99,7 @@ fn main() {
         .min()
         .unwrap();
 
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     // ----------------------------------------------------------------------
 
@@ -112,7 +113,7 @@ fn main() {
         .min()
         .unwrap();
 
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }
 
 #[cfg(test)]

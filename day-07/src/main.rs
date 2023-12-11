@@ -1,3 +1,4 @@
+use lib::*;
 use std::{cmp::Ordering, collections::HashMap};
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd)]
@@ -212,7 +213,7 @@ fn main() {
         .map(|(idx, h)| h.bet * (idx + 1))
         .sum();
 
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     // -----------------------------------------------------------------------
 
@@ -225,5 +226,5 @@ fn main() {
         .map(|(idx, h)| h.0.bet * (idx + 1))
         .sum();
 
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }

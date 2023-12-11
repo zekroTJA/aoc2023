@@ -1,3 +1,5 @@
+use lib::*;
+
 fn get_digits(line: &str, with_literals: bool) -> String {
     let mut number = String::new();
     let mut buff = String::new();
@@ -48,10 +50,8 @@ fn main() {
     let lines: Vec<&str> = input.split('\n').collect();
 
     let p1: u32 = lines.iter().map(|l| get_combined_number(l, false)).sum();
-
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     let p2: u32 = lines.iter().map(|l| get_combined_number(l, true)).sum();
-
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }

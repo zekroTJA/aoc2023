@@ -1,3 +1,5 @@
+use lib::*;
+
 fn main() {
     let input: String = lib::read_input!();
 
@@ -17,7 +19,7 @@ fn main() {
         .iter()
         .map(|(&t, &d)| possibilities(t, d))
         .product();
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     // ----------------------------------------------------------------------
 
@@ -29,7 +31,7 @@ fn main() {
     let distance: isize = time_distances.next().unwrap();
 
     let p2 = possibilities_faster(time as f64, distance as f64);
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }
 
 // This was my original approach, but i wanted to explore how to solve this

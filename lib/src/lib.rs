@@ -1,7 +1,12 @@
-pub mod direction;
-pub mod pos;
-pub mod pos3d;
-pub mod vector;
+mod direction;
+mod pos;
+mod pos3d;
+mod vector;
+
+pub use direction::*;
+pub use pos::*;
+pub use pos3d::*;
+pub use vector::*;
 
 #[macro_export]
 macro_rules! read_input {

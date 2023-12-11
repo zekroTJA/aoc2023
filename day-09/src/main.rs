@@ -1,3 +1,5 @@
+use lib::*;
+
 fn diff(v: &[isize]) -> Vec<isize> {
     v.windows(2).map(|w| w[1] - w[0]).collect()
 }
@@ -47,7 +49,7 @@ fn main() {
         .map(|v| extrapolate(&v))
         .sum();
 
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     let p2: isize = histories
         .iter()
@@ -55,7 +57,7 @@ fn main() {
         .map(|v| extrapolate_backwards(&v))
         .sum();
 
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }
 
 #[cfg(test)]

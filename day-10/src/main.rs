@@ -1,7 +1,7 @@
 #![feature(iter_intersperse)]
 
 use core::fmt;
-use lib::{direction::Direction, pos::Pos};
+use lib::*;
 use std::collections::HashSet;
 
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
@@ -281,12 +281,12 @@ fn main() {
     let grid = Grid::parse(&input);
 
     let (p1, inloop) = grid.part1();
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     // ---------------------------------------------
 
     let grid = grid.replace_non_connected(&inloop).intersperse();
 
     let p2 = grid.part2();
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }

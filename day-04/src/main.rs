@@ -1,3 +1,5 @@
+use lib::*;
+
 struct Card {
     win: Vec<usize>,
     hand: Vec<usize>,
@@ -38,7 +40,7 @@ fn main() {
     let cards: Vec<_> = input.split('\n').map(Card::parse).collect();
 
     let p1: usize = cards.iter().map(|c| c.points()).sum();
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     let mut stacks = vec![1usize; cards.len()];
 
@@ -51,5 +53,5 @@ fn main() {
     }
 
     let p2: usize = stacks.iter().sum();
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }

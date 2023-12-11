@@ -1,3 +1,4 @@
+use lib::*;
 use num::Integer;
 use std::collections::HashMap;
 
@@ -84,5 +85,5 @@ fn main() {
     let lcm = iter.next().unwrap();
     let p2 = iter.fold(*lcm, |g, c| g.lcm(c));
 
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }

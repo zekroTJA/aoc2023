@@ -1,4 +1,4 @@
-use lib::pos::Pos;
+use lib::*;
 use std::cell::RefCell;
 
 #[derive(Eq, PartialEq, Debug)]
@@ -106,10 +106,10 @@ fn main() {
     let grid = Grid::parse(&input);
 
     let p1 = grid.solve(2);
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     let p2 = grid.solve(1_000_000);
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }
 
 #[cfg(test)]

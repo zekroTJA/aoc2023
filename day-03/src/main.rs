@@ -1,7 +1,6 @@
 use core::fmt;
+use lib::*;
 use std::collections::HashMap;
-
-use lib::pos::Pos;
 
 #[derive(Debug)]
 struct Number {
@@ -106,7 +105,7 @@ fn main() {
         .collect();
 
     let p1: u32 = res.iter().map(|r| r.number).sum();
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     let gears: Vec<_> = numbers
         .iter()
@@ -125,5 +124,5 @@ fn main() {
         .filter(|v| v.len() == 2)
         .map(|v| v.iter().map(|n| n.number).product::<u32>())
         .sum();
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }

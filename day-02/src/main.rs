@@ -1,3 +1,5 @@
+use lib::*;
+
 #[derive(Default, Debug)]
 struct Cubes {
     red: u32,
@@ -74,10 +76,8 @@ fn main() {
         .filter(|g| g.is_possible(&max))
         .map(|g| g.id)
         .sum();
-
-    println!("Part 1 Solution: {p1}");
+    p1!(p1);
 
     let p2: u32 = games.iter().map(Game::max_cubes).map(|c| c.power()).sum();
-
-    println!("Part 2 Solution: {p2}");
+    p2!(p2);
 }
