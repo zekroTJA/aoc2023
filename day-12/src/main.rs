@@ -3,7 +3,7 @@
 use lib::*;
 use std::{cell::RefCell, collections::HashMap, hash::Hash};
 
-#[derive(Eq, PartialEq, Clone, Hash, Debug)]
+#[derive(Eq, PartialEq, Clone, Copy, Hash, Debug)]
 enum Type {
     Operational,
     Damaged,
@@ -24,17 +24,17 @@ impl Type {
 #[derive(Debug)]
 struct MapLine {
     map: Vec<Type>,
-    damaged: Vec<usize>,
+    blocks: Vec<usize>,
 }
 
 impl MapLine {
     fn parse(line: &str) -> Self {
-        let (map_raw, damaged_raw) = line.split_once(' ').unwrap();
+        let (map_raw, blocks_raw) = line.split_once(' ').unwrap();
 
-        let damaged = damaged_raw.split(',').map(|v| v.parse().unwrap()).collect();
+        let blocks = blocks_raw.split(',').map(|v| v.parse().unwrap()).collect();
         let map = map_raw.chars().map(Type::parse).collect();
 
-        Self { map, damaged }
+        Self { map, blocks }
     }
 
     fn count(&self) -> usize {
@@ -43,44 +43,46 @@ impl MapLine {
 
         fn count<'a>(
             line: &'a [Type],
-            damaged: &'a [usize],
+            blocks: &'a [usize],
             cache: &'a RefCell<Cache<'a>>,
         ) -> usize {
-            if let Some(res) = cache.borrow().get(&(line, damaged)) {
+            if let Some(res) = cache.borrow().get(&(line, blocks)) {
                 return *res;
             }
 
             if line.is_empty() {
-                return if damaged.is_empty() { 1 } else { 0 };
+                return if blocks.is_empty() { 1 } else { 0 };
             }
 
-            if damaged.is_empty() {
+            if blocks.is_empty() {
                 return if line.contains(&Type::Damaged) { 0 } else { 1 };
             }
 
+            let spring = line[0];
+            let block_size = blocks[0];
             let mut c = 0;
 
-            if line[0] == Type::Operational || line[0] == Type::Unknown {
-                c += count(&line[1..], damaged, cache);
+            if spring == Type::Operational || spring == Type::Unknown {
+                c += count(&line[1..], blocks, cache);
             }
 
-            if (line[0] == Type::Damaged || line[0] == Type::Unknown)
-                && line.len() >= damaged[0]
-                && !line[..damaged[0]].contains(&Type::Operational)
-                && (line.len() == damaged[0] || line[damaged[0]] != Type::Damaged)
+            if (spring == Type::Damaged || spring == Type::Unknown)
+                && line.len() >= block_size
+                && !line[..block_size].contains(&Type::Operational)
+                && (line.len() == block_size || line[block_size] != Type::Damaged)
             {
-                if line.len() <= damaged[0] {
-                    c += count(&[], &damaged[1..], cache)
+                if line.len() <= block_size {
+                    c += count(&[], &blocks[1..], cache)
                 } else {
-                    c += count(&line[damaged[0] + 1..], &damaged[1..], cache);
+                    c += count(&line[block_size + 1..], &blocks[1..], cache);
                 }
             }
 
-            cache.borrow_mut().insert((line, damaged), c);
+            cache.borrow_mut().insert((line, blocks), c);
             c
         }
 
-        count(&self.map, &self.damaged, &cache)
+        count(&self.map, &self.blocks, &cache)
     }
 
     fn unfold(&self, folds: usize) -> Self {
@@ -91,9 +93,9 @@ impl MapLine {
             .cloned()
             .collect();
 
-        let damaged = self.damaged.repeat(folds);
+        let blocks = self.blocks.repeat(folds);
 
-        Self { map, damaged }
+        Self { map, blocks }
     }
 }
 
