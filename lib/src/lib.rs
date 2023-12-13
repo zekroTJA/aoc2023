@@ -1,9 +1,11 @@
 mod direction;
+mod grid;
 mod pos;
 mod pos3d;
 mod vector;
 
 pub use direction::*;
+pub use grid::*;
 pub use pos::*;
 pub use pos3d::*;
 pub use vector::*;

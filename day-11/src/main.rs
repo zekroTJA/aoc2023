@@ -10,17 +10,7 @@ impl Grid {
     }
 
     fn flip_cw(&self) -> Self {
-        let mut new = vec![];
-
-        for x in 0..self.0[0].len() {
-            let mut row = vec![];
-            for y in 0..self.0.len() {
-                row.push(self.0[y][x])
-            }
-            new.push(row);
-        }
-
-        Self(new)
+        Self(flip_grid(&self.0))
     }
 
     fn find_all_galaxies(&self) -> Vec<Pos> {
