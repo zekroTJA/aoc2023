@@ -1,8 +1,8 @@
-use crate::vector::Vector;
+use crate::{vector::Vector, Direction};
 use core::fmt;
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
-#[derive(Clone, Copy, Hash, Eq, PartialEq, Default, Debug)]
+#[derive(Clone, Copy, Hash, Eq, PartialEq, Default, Debug, PartialOrd, Ord)]
 pub struct Pos {
     pub x: isize,
     pub y: isize,
@@ -19,6 +19,17 @@ impl Pos {
 
     pub fn manhattan_distance(&self, to: Pos) -> usize {
         (to.y - self.y).unsigned_abs() + (to.x - self.x).unsigned_abs()
+    }
+
+    pub fn mv(self, dir: Direction) -> Self {
+        self + dir.into()
+    }
+
+    pub fn turn_ccw(&self) -> Pos {
+        Pos {
+            x: -self.y,
+            y: self.x,
+        }
     }
 }
 
