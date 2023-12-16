@@ -1,6 +1,7 @@
 use crate::pos::Pos;
+use core::fmt;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum Direction {
     Up,
     Down,
@@ -38,6 +39,17 @@ impl From<Direction> for Pos {
             Direction::Down => Pos { x: 0, y: -1 },
             Direction::Left => Pos { x: -1, y: 0 },
             Direction::Right => Pos { x: 1, y: 0 },
+        }
+    }
+}
+
+impl fmt::Display for Direction {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Direction::Up => write!(f, "↑"),
+            Direction::Down => write!(f, "↓"),
+            Direction::Left => write!(f, "←"),
+            Direction::Right => write!(f, "→"),
         }
     }
 }
