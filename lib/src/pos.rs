@@ -1,6 +1,6 @@
 use crate::{vector::Vector, Direction};
 use core::fmt;
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Clone, Copy, Hash, Eq, PartialEq, Default, Debug, PartialOrd, Ord)]
 pub struct Pos {
@@ -79,6 +79,21 @@ impl SubAssign for Pos {
     fn sub_assign(&mut self, rhs: Self) {
         self.x -= rhs.x;
         self.y -= rhs.y;
+    }
+}
+
+impl Mul for Pos {
+    type Output = Self;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        (self.x * rhs.x, self.y * rhs.y).into()
+    }
+}
+
+impl MulAssign for Pos {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.x *= rhs.x;
+        self.y *= rhs.y;
     }
 }
 

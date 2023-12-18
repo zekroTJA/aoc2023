@@ -1,5 +1,6 @@
 use crate::pos::Pos;
 use core::fmt;
+use std::ops::Mul;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum Direction {
@@ -10,6 +11,10 @@ pub enum Direction {
 }
 
 impl Direction {
+    pub fn all() -> [Self; 4] {
+        [Self::Up, Self::Right, Self::Down, Self::Left]
+    }
+
     pub fn reverse(&self) -> Direction {
         match self {
             Direction::Up => Direction::Down,
@@ -51,5 +56,21 @@ impl fmt::Display for Direction {
             Direction::Left => write!(f, "←"),
             Direction::Right => write!(f, "→"),
         }
+    }
+}
+
+impl Mul<isize> for Direction {
+    type Output = Pos;
+
+    fn mul(self, rhs: isize) -> Self::Output {
+        Pos::from(self) * Pos { x: rhs, y: rhs }
+    }
+}
+
+impl Mul<usize> for Direction {
+    type Output = Pos;
+
+    fn mul(self, rhs: usize) -> Self::Output {
+        self * rhs as isize
     }
 }
