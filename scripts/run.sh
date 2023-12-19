@@ -7,7 +7,14 @@ function run_day {
     fi
     
     cargo build $RELEASE_FLAG -p "$1"
+
+    if [ -f "$1/test_input.txt" ] && [ -z "$2" ]; then
+        "./target/$TARGET/$1" --test
+    fi
+
+    printf "\033[35m"
     "./target/$TARGET/$1" "$2"
+    printf "\033[0m"
 }
 
 if [ -z "$1" ] || [ "$1" == "--test" ]; then
